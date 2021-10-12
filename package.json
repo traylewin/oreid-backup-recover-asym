@@ -1,0 +1,28 @@
+{
+  "name": "oreid-backup-recover",
+  "version": "1.0.0",
+  "description": "Recover ore-id backup keys",
+  "main": "build/index.js",
+  "bin": "build/index.js",
+  "scripts": {
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 rm -rf ./dist && npm run build-typescript && npm run package",
+    "build-typescript": "tsc",
+    "package": "pkg package.json --public-packages \"*\" ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "pkg": {
+    "scripts": "build/*.js",
+    "outputPath": "dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@open-rights-exchange/chainjs": "^3.0.8",
+    "fs": "0.0.1-security",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^15.14.0",
+    "@types/readline-sync": "^1.4.3"
+  }
+}
