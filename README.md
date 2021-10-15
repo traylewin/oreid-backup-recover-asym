@@ -1,32 +1,6 @@
 # ORE ID Backup Recovery Utility
 Recover keys from asymmetrically encrypted key backup file
 
-# Setup for build
-
-```
-npm install --global pkg@5.3.3
-nvm install 14.16.1
-```
-
-# To build executable packages
-
-**Node 14 or higher Required** by pkg library.<br>
-Use ```nvm current``` to see if you are running Node 14, if not you can switch to it using nvm.
-
-```
-nvm use node v14.16.1
-```
-
-```
-npm run build
-```
-
-Use pkg version 5.3.3 or higher (earlier version might throw errors)
-
-If you get 'FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory', make sure you are passing in the option max_old_space_size=4096. It should already be set on npm run build command. However if you need to add it manually, you can do the following on the command prompt:
-
-```export NODE_OPTIONS=--max_old_space_size=4096```
-
 <br><br>
 # How to recover keys from an encrypted Oreid backup file
 
@@ -80,4 +54,31 @@ Note: input, key, and output filenames are optional (uses defaults if not provid
 The Examples directory includes example input, key, and output file contents for various scenarios. Please refer to the readme in that directory.
 
 <br>
+
+
+# Setup for build
+
+```
+npm install --global pkg@5.3.3
+nvm install 14.16.1
+```
+
+# To build executable packages
+
+**Node 14 or higher Required** by pkg library.<br>
+Use ```nvm current``` to see if you are running Node 14, if not you can switch to it using nvm.
+
+```
+nvm use node v14.16.1
+```
+
+```
+npm run build
+```
+
+Use pkg version 5.3.3 or higher (earlier version might throw errors)
+
+If you get 'FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory', make sure you are passing in the option max_old_space_size=4096. It should already be set on npm run build command. However if you need to add it manually, you can do the following on the command prompt:
+
+```export NODE_OPTIONS=--max_old_space_size=4096```
 
