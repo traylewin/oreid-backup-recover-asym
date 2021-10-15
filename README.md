@@ -1,5 +1,4 @@
-# oreid-backup-recover
-
+# ORE ID Backup Recovery Utility
 Recover keys from asymmetrically encrypted key backup file
 
 # Setup for build
