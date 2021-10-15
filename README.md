@@ -1,7 +1,7 @@
 # ORE ID Backup Recovery Utility
 Recover keys from asymmetrically encrypted key backup file
 
-<br><br>
+<br>
 # How to recover keys from an encrypted Oreid backup file
 
 ### Setup
@@ -53,8 +53,7 @@ Note: input, key, and output filenames are optional (uses defaults if not provid
 
 The Examples directory includes example input, key, and output file contents for various scenarios. Please refer to the readme in that directory.
 
-<br>
-
+<br><br>
 
 # Setup for build
 
