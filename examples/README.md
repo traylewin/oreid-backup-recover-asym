@@ -77,3 +77,10 @@ Demonstrates an input file with an array of multiply encrypted payloads (wrapped
 
 - Run ```./oreid-backup-recover-macos algorand ../examples/input3.json ../examples/keys3.json```
 <br>
+
+### Example 4
+
+Demonstrates an input file with a single multiply encrypted payload (wrapped) and a key file with both of the private keys needed to completely unwrap and decrypt. The output4.json file shows the results of the final decryption.
+
+- Run ```./oreid-backup-recover-macos algorand ../examples/input4.json ../examples/keys4.json```
+<br>
