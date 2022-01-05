@@ -84,6 +84,12 @@ async function start() {
 
         // blob can be an array of 'wrapped' encryptions that are unwrapped one at a time with each private key
         const encryptionLayers = Array.isArray(encryptedBlob) ? encryptedBlob.length : 1;
+
+        // if we have a single encryption layer inside an array, remove it from the array
+        if(Array.isArray(encryptedBlob) && encryptionLayers === 1) {
+          encryptedBlob = encryptedBlob[0]
+        }
+
         if (encryptionLayers === 1) {
           encryptedBlob = encryptedBlob as ModelsCryptoAsymmetric.AsymmetricEncryptedData
           decrypted = await chainjs.decryptWithPrivateKey(
@@ -95,34 +101,22 @@ async function start() {
 
         // encrypted payload is 'wrapped' with multiple keys
         if (encryptionLayers !== 1) {
+          encryptedBlob = encryptedBlob as ModelsCryptoAsymmetric.AsymmetricEncryptedData[]
           // more then one encryption layer and enough keys to unwrap them all...
           if (encryptionLayers === privateKeys.length) {
-            encryptedBlob = encryptedBlob as ModelsCryptoAsymmetric.AsymmetricEncryptedData[]
-            // unwrap all layers
-            decrypted = await chainjs.decryptWithPrivateKeys(
+            // unwrap all layers to get to final value
+            ;({ decrypted } = await chainjs.decryptWithPrivateKeys(
+              stringifyEncrypted(encryptedBlob),
+              privateKeys
+            ));
+            decryptedPublicKey = encryptedBlob[0].publicKey;
+          } else {
+            // we only have some keys - unwrap only some of the layers
+            const { remaining } = await chainjs.decryptWithPrivateKeys(
               stringifyEncrypted(encryptedBlob),
               privateKeys
             );
-            decryptedPublicKey = encryptedBlob[0].publicKey;
-          } else {
-            // only unwrap the outer layer (highest seq number) - with a single private key (since we dont have enough keys to unwrap them all)
-            const blobsSeqDescending = (
-              encryptedBlob as ModelsCryptoAsymmetric.AsymmetricEncryptedData[]
-            ).sort((a, b) => ((a.seq as number) < (b.seq as number) ? 1 : -1)); // sort by desc seq number
-            const firstPrivateKey = privateKeys.slice(-1)[0] // the last privateKey in the array is the first one used to encrypt (to unwrap in reverse order of encryption)
-            decrypted = await chainjs.decryptWithPrivateKey(
-              stringifyEncrypted(blobsSeqDescending[0]), // unwrap highest seq number
-              firstPrivateKey // use only the 'first' private key provided (which is the first encyption to be unwrapped)
-            );
-            // drop preivous outer (now decrypted) layer and set newly decrypted value as ciphertext for new outer layer
-            const [outerLayer, ...otherLayers] = blobsSeqDescending;
-            otherLayers[0].ciphertext = decrypted;
-            if (otherLayers.length === 1) {
-              // remove object from array if it only has one item
-              unwrappedDecrypted = otherLayers[0]
-            } else if (otherLayers.length > 1) {
-              unwrappedDecrypted = otherLayers
-            }
+            unwrappedDecrypted = remaining
           }
         }
 

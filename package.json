@@ -1,6 +1,6 @@
 {
   "name": "oreid-backup-recover",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Recover ore-id backup keys",
   "main": "build/index.js",
   "bin": "build/index.js",
@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@open-rights-exchange/chainjs": "^3.0.8",
+    "@open-rights-exchange/chainjs": "^3.4.0",
     "fs": "0.0.1-security",
     "readline-sync": "^1.4.10"
   },
